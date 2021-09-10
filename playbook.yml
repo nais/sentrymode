@@ -12,6 +12,8 @@
       src: "sentrymode.sh"
       dest: "/opt/sentrymode/sentrymode.sh"
       mode: 0770
+    notify:
+      - restart_sentrymode
 
   - name: Copy service file
     copy:
