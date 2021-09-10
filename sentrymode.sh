@@ -11,7 +11,8 @@ fi
 while sleep "${interval}"; do
   load=$(uptime | sed -rne 's|.*load average: ([0-9]+)\..*|\1|p')
   if [[ load -gt min_load ]]; then
-    rootdir=/root/sentrymode
+	echo "apapapp high load (${load}), snap snap etc..."
+    rootdir=/opt/sentrymode
     find $rootdir -type d -ctime 5 | xargs rm -rf # delete old snapshots
     dir=$rootdir/$(date +%Y-%m-%d_%H%M%S)
     mkdir -p "$dir"
