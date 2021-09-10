@@ -1,0 +1,8 @@
+[Unit]
+Description=sentrymode for docker nodes
+
+[Service]
+ExecStart=/opt/sentrymode/sentrymode.sh 10 5
+
+[Install]
+WantedBy=multi-user.target

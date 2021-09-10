@@ -1,0 +1,35 @@
+- hosts: workers
+  user: h129009
+  become: yes
+  tasks:
+  - name: Ensure sentrymode dir exists
+    file:
+      path: /opt/sentrymode
+      state: directory
+
+  - name: Copy sentrymode script
+    copy:
+      src: "sentrymode.sh"
+      dest: "/opt/sentrymode/sentrymode.sh"
+      mode: 0770
+
+  - name: Copy service file
+    copy:
+      src: "sentrymode.service"
+      dest: "/etc/systemd/system/sentrymode.service"
+    notify:
+      - restart_sentrymode
+
+  - name: Enable sentrymode
+    systemd:
+      daemon_reload: yes
+      name: sentrymode.service
+      state: started
+      enabled: yes
+
+  handlers:
+    - name: restart_sentrymode
+      systemd:
+        daemon_reload: yes
+        name: sentrymode.service
+        state: restarted
